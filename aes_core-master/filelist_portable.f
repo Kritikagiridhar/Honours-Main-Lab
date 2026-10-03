@@ -1,0 +1,12 @@
++incdir+./rtl
++incdir+/home/student/Documents/018/aes_core-master/rtl/verilog
+/home/student/Documents/018/aes_core-master/rtl/verilog/timescale.v
+/home/student/Documents/018/aes_core-master/rtl/verilog/aes_rcon.v
+/home/student/Documents/018/aes_core-master/rtl/verilog/aes_sbox.v
+/home/student/Documents/018/aes_core-master/rtl/verilog/aes_inv_sbox.v
+/home/student/Documents/018/aes_core-master/rtl/verilog/aes_key_expand_128.v
+/home/student/Documents/018/aes_core-master/rtl/verilog/aes_inv_cipher_top.v
+/home/student/Documents/018/aes_core-master/rtl/verilog/aes_cipher_top.v
+/home/student/Documents/018/aes_core-master/rtl/verilog/axi_aes_slave(1).v
+/home/student/Documents/018/aes_core-master/rtl/verilog/axi_aes_top(1).v
+/home/student/Documents/018/aes_core-master/bench/verilog//axi_aes_tb.v
