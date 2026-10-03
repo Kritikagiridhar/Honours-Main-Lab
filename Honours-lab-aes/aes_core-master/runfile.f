@@ -1,9 +1,0 @@
-+incdir+rtl/verilog
-rtl/verilog/timescale.v
-rtl/verilog/aes_rcon.v
-rtl/verilog/aes_sbox.v
-rtl/verilog/aes_inv_sbox.v
-rtl/verilog/aes_key_expand_128.v
-rtl/verilog/aes_inv_cipher_top.v
-rtl/verilog/aes_cipher_top.v
-bench/verilog/test_bench_top.v
