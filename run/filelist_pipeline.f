@@ -1,0 +1,10 @@
+../lib/cdc_sync.sv
+../lib/sync_fifo.sv
+../tb/adc_model.sv
+../rtl/timer/timer.sv
+../rtl/fir_filter/fir_filter.sv
+../rtl/dma_controller/dma_controller.sv
+../rtl/sample_buffer/sample_buffer.sv
+../rtl/vga_controller/vga_controller.sv
+../rtl/watchdog/watchdog.sv
+../tb/tb_soc_pipeline.sv

@@ -1,0 +1,101 @@
+
+Discarded input sections
+
+ .text          0x00000000        0x0 main.o
+ .data          0x00000000        0x0 main.o
+ .bss           0x00000000        0x0 main.o
+ .comment       0x00000000       0x1a main.o
+ .data          0x00000000        0x0 uart.o
+ .bss           0x00000000        0x0 uart.o
+ .comment       0x00000000       0x1a uart.o
+ .text          0x00000000        0x0 crt0.o
+ .data          0x00000000        0x0 crt0.o
+ .bss           0x00000000        0x0 crt0.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+IMEM             0x10000000         0x00010000         xr
+DMEM             0x10020000         0x00010000         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD main.o
+LOAD uart.o
+LOAD crt0.o
+
+.text           0x10000000      0x1ec
+                0x10000000                        . = ALIGN (0x4)
+ *(.text.init)
+ .text.init     0x10000000       0x70 crt0.o
+                0x10000000                _start
+ *(.text)
+ .text          0x10000070       0x74 uart.o
+                0x10000070                uart_init
+                0x1000008a                uart_putc
+                0x1000009a                uart_puts
+                0x100000c8                uart_has_rx
+                0x100000d2                uart_getc
+ *(.text.*)
+ .text.startup  0x100000e4       0x34 main.o
+                0x100000e4                main
+ *(.rodata)
+ *(.rodata.*)
+ .rodata.str1.4
+                0x10000118       0xd1 main.o
+ *(.srodata)
+ *(.srodata.*)
+                0x100001ec                        . = ALIGN (0x4)
+ *fill*         0x100001e9        0x3 
+                0x100001ec                        _etext = .
+                0x100001ec                        _sidata = LOADADDR (.data)
+
+.rela.dyn       0x100001ec        0x0
+ .rela.text.init
+                0x100001ec        0x0 main.o
+
+.data           0x10020000        0x0 load address 0x100001ec
+                0x10020000                        . = ALIGN (0x4)
+                0x10020000                        _sdata = .
+                0x10020800                        __global_pointer$ = (. + 0x800)
+ *(.sdata)
+ *(.sdata.*)
+ *(.data)
+ *(.data.*)
+                0x10020000                        . = ALIGN (0x4)
+                0x10020000                        _edata = .
+
+.bss            0x10020000        0x0 load address 0x100001ec
+                0x10020000                        . = ALIGN (0x4)
+                0x10020000                        _sbss = .
+ *(.sbss)
+ *(.sbss.*)
+ *(.bss)
+ *(.bss.*)
+ *(COMMON)
+                0x10020000                        . = ALIGN (0x4)
+                0x10020000                        _ebss = .
+
+.stack          0x10020000     0x2000 load address 0x100001ec
+                0x10020000                        . = ALIGN (0x10)
+                0x10020000                        _stack_bottom = .
+                0x10022000                        . = (. + 0x2000)
+ *fill*         0x10020000     0x2000 
+                0x10022000                        _stack_top = .
+                0x10022000                        _sp = .
+
+/DISCARD/
+ *(.comment)
+ *(.note*)
+ *(.eh_frame*)
+OUTPUT(hello_world.elf elf32-littleriscv)
+
+.riscv.attributes
+                0x00000000       0x3c
+ .riscv.attributes
+                0x00000000       0x38 main.o
+ .riscv.attributes
+                0x00000038       0x38 uart.o
+ .riscv.attributes
+                0x00000070       0x3a crt0.o

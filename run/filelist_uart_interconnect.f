@@ -1,0 +1,14 @@
++incdir+../rtl/axi_uart/include
++incdir+../rtl/axi_uart/rtl
+../rtl/axi_uart/rtl/axi_internal_fifo.v
+../rtl/axi_uart/rtl/uart_parity_bit_compute.v
+../rtl/axi_uart/rtl/uart_transmitter.v
+../rtl/axi_uart/rtl/uart_receiver.v
+../rtl/axi_uart/rtl/uart_controller.v
+../rtl/axi_uart/rtl/axi_uart_top.v
+../rtl/interconnect/priority_encoder.v
+../rtl/interconnect/arbiter.v
+../rtl/interconnect/axi_interconnect.v
+../rtl/interconnect/axi_interconnect_wrap_5x20.v
+../rtl/axi_interconnect_uart_top.v
+../tb/tb_axi_interconnect_uart_top.sv

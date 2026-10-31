@@ -1,0 +1,225 @@
+
+hello_world.elf:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+10000000 <_start>:
+10000000:	30047073          	csrc	mstatus,8
+10000004:	aaaab2b7          	lui	t0,0xaaaab
+10000008:	aa628293          	add	t0,t0,-1370 # aaaaaaa6 <_sp+0x9aa88aa6>
+1000000c:	7c029073          	csrw	0x7c0,t0
+10000010:	10030137          	lui	sp,0x10030
+10000014:	1141                	add	sp,sp,-16 # 1002fff0 <_sp+0xdff0>
+10000016:	00020197          	auipc	gp,0x20
+1000001a:	7ea18193          	add	gp,gp,2026 # 10020800 <__global_pointer$>
+1000001e:	00020297          	auipc	t0,0x20
+10000022:	fe228293          	add	t0,t0,-30 # 10020000 <_ebss>
+10000026:	00020317          	auipc	t1,0x20
+1000002a:	fda30313          	add	t1,t1,-38 # 10020000 <_ebss>
+
+1000002e <bss_loop>:
+1000002e:	0062f663          	bgeu	t0,t1,1000003a <bss_done>
+10000032:	0002a023          	sw	zero,0(t0)
+10000036:	0291                	add	t0,t0,4
+10000038:	bfdd                	j	1000002e <bss_loop>
+
+1000003a <bss_done>:
+1000003a:	00020297          	auipc	t0,0x20
+1000003e:	fc628293          	add	t0,t0,-58 # 10020000 <_ebss>
+10000042:	00020317          	auipc	t1,0x20
+10000046:	fbe30313          	add	t1,t1,-66 # 10020000 <_ebss>
+1000004a:	00000397          	auipc	t2,0x0
+1000004e:	1a238393          	add	t2,t2,418 # 100001ec <_etext>
+10000052:	00728b63          	beq	t0,t2,10000068 <data_done>
+
+10000056 <data_loop>:
+10000056:	0062f963          	bgeu	t0,t1,10000068 <data_done>
+1000005a:	0003ae03          	lw	t3,0(t2)
+1000005e:	01c2a023          	sw	t3,0(t0)
+10000062:	0291                	add	t0,t0,4
+10000064:	0391                	add	t2,t2,4
+10000066:	bfc5                	j	10000056 <data_loop>
+
+10000068 <data_done>:
+10000068:	28b5                	jal	100000e4 <main>
+
+1000006a <halt>:
+1000006a:	10500073          	wfi
+1000006e:	bff5                	j	1000006a <halt>
+
+10000070 <uart_init>:
+10000070:	400067b7          	lui	a5,0x40006
+10000074:	08300713          	li	a4,131
+10000078:	c7d8                	sw	a4,12(a5)
+1000007a:	c788                	sw	a0,8(a5)
+1000007c:	470d                	li	a4,3
+1000007e:	c7d8                	sw	a4,12(a5)
+10000080:	471d                	li	a4,7
+10000082:	c798                	sw	a4,8(a5)
+10000084:	0007a223          	sw	zero,4(a5) # 40006004 <_sp+0x2ffe4004>
+10000088:	8082                	ret
+
+1000008a <uart_putc>:
+1000008a:	40006737          	lui	a4,0x40006
+1000008e:	4b5c                	lw	a5,20(a4)
+10000090:	0207f793          	and	a5,a5,32
+10000094:	dfed                	beqz	a5,1000008e <uart_putc+0x4>
+10000096:	c308                	sw	a0,0(a4)
+10000098:	8082                	ret
+
+1000009a <uart_puts>:
+1000009a:	1141                	add	sp,sp,-16
+1000009c:	c422                	sw	s0,8(sp)
+1000009e:	c226                	sw	s1,4(sp)
+100000a0:	c606                	sw	ra,12(sp)
+100000a2:	842a                	mv	s0,a0
+100000a4:	44a9                	li	s1,10
+100000a6:	00044783          	lbu	a5,0(s0)
+100000aa:	e791                	bnez	a5,100000b6 <uart_puts+0x1c>
+100000ac:	40b2                	lw	ra,12(sp)
+100000ae:	4422                	lw	s0,8(sp)
+100000b0:	4492                	lw	s1,4(sp)
+100000b2:	0141                	add	sp,sp,16
+100000b4:	8082                	ret
+100000b6:	00979463          	bne	a5,s1,100000be <uart_puts+0x24>
+100000ba:	4535                	li	a0,13
+100000bc:	37f9                	jal	1000008a <uart_putc>
+100000be:	00044503          	lbu	a0,0(s0)
+100000c2:	0405                	add	s0,s0,1
+100000c4:	37d9                	jal	1000008a <uart_putc>
+100000c6:	b7c5                	j	100000a6 <uart_puts+0xc>
+
+100000c8 <uart_has_rx>:
+100000c8:	400067b7          	lui	a5,0x40006
+100000cc:	4bc8                	lw	a0,20(a5)
+100000ce:	8905                	and	a0,a0,1
+100000d0:	8082                	ret
+
+100000d2 <uart_getc>:
+100000d2:	40006737          	lui	a4,0x40006
+100000d6:	4b5c                	lw	a5,20(a4)
+100000d8:	8b85                	and	a5,a5,1
+100000da:	dff5                	beqz	a5,100000d6 <uart_getc+0x4>
+100000dc:	4308                	lw	a0,0(a4)
+100000de:	0ff57513          	zext.b	a0,a0
+100000e2:	8082                	ret
+
+100000e4 <main>:
+100000e4:	1141                	add	sp,sp,-16
+100000e6:	4541                	li	a0,16
+100000e8:	c606                	sw	ra,12(sp)
+100000ea:	3759                	jal	10000070 <uart_init>
+100000ec:	10000537          	lui	a0,0x10000
+100000f0:	11850513          	add	a0,a0,280 # 10000118 <main+0x34>
+100000f4:	375d                	jal	1000009a <uart_puts>
+100000f6:	10000537          	lui	a0,0x10000
+100000fa:	15450513          	add	a0,a0,340 # 10000154 <main+0x70>
+100000fe:	3f71                	jal	1000009a <uart_puts>
+10000100:	10000537          	lui	a0,0x10000
+10000104:	18050513          	add	a0,a0,384 # 10000180 <main+0x9c>
+10000108:	3f49                	jal	1000009a <uart_puts>
+1000010a:	10000537          	lui	a0,0x10000
+1000010e:	1b050513          	add	a0,a0,432 # 100001b0 <main+0xcc>
+10000112:	3761                	jal	1000009a <uart_puts>
+10000114:	0001                	nop
+10000116:	bffd                	j	10000114 <main+0x30>
+10000118:	3d0a                	.2byte	0x3d0a
+1000011a:	3d3d                	jal	fffff58 <_start-0xa8>
+1000011c:	3d3d                	jal	fffff5a <_start-0xa6>
+1000011e:	3d3d                	jal	fffff5c <_start-0xa4>
+10000120:	3d3d                	jal	fffff5e <_start-0xa2>
+10000122:	3d3d                	jal	fffff60 <_start-0xa0>
+10000124:	3d3d                	jal	fffff62 <_start-0x9e>
+10000126:	3d3d                	jal	fffff64 <_start-0x9c>
+10000128:	3d3d                	jal	fffff66 <_start-0x9a>
+1000012a:	3d3d                	jal	fffff68 <_start-0x98>
+1000012c:	3d3d                	jal	fffff6a <_start-0x96>
+1000012e:	3d3d                	jal	fffff6c <_start-0x94>
+10000130:	3d3d                	jal	fffff6e <_start-0x92>
+10000132:	3d3d                	jal	fffff70 <_start-0x90>
+10000134:	3d3d                	jal	fffff72 <_start-0x8e>
+10000136:	3d3d                	jal	fffff74 <_start-0x8c>
+10000138:	3d3d                	jal	fffff76 <_start-0x8a>
+1000013a:	3d3d                	jal	fffff78 <_start-0x88>
+1000013c:	3d3d                	jal	fffff7a <_start-0x86>
+1000013e:	3d3d                	jal	fffff7c <_start-0x84>
+10000140:	3d3d                	jal	fffff7e <_start-0x82>
+10000142:	3d3d                	jal	fffff80 <_start-0x80>
+10000144:	3d3d                	jal	fffff82 <_start-0x7e>
+10000146:	3d3d                	jal	fffff84 <_start-0x7c>
+10000148:	3d3d                	jal	fffff86 <_start-0x7a>
+1000014a:	3d3d                	jal	fffff88 <_start-0x78>
+1000014c:	3d3d                	jal	fffff8a <_start-0x76>
+1000014e:	0a3d                	add	s4,s4,15
+10000150:	0000                	unimp
+10000152:	0000                	unimp
+10000154:	2020                	.2byte	0x2020
+10000156:	6548                	.2byte	0x6548
+10000158:	6c6c                	.2byte	0x6c6c
+1000015a:	57202c6f          	jal	s8,100026cc <_etext+0x24e0>
+1000015e:	646c726f          	jal	tp,100c77a4 <_sp+0xa57a4>
+10000162:	6620                	.2byte	0x6620
+10000164:	6f72                	.2byte	0x6f72
+10000166:	206d                	jal	10000210 <_etext+0x24>
+10000168:	4952                	lw	s2,20(sp)
+1000016a:	562d4353          	.4byte	0x562d4353
+1000016e:	5620                	lw	s0,104(a2)
+10000170:	6565                	lui	a0,0x19
+10000172:	2052                	.2byte	0x2052
+10000174:	4c45                	li	s8,17
+10000176:	2032                	.2byte	0x2032
+10000178:	21436f53          	.4byte	0x21436f53
+1000017c:	000a                	c.slli	zero,0x2
+1000017e:	0000                	unimp
+10000180:	2020                	.2byte	0x2020
+10000182:	3631                	jal	ffffc8e <_start-0x372>
+10000184:	3535                	jal	fffffb0 <_start-0x50>
+10000186:	2d30                	.2byte	0x2d30
+10000188:	706d6f43          	.4byte	0x706d6f43
+1000018c:	7461                	lui	s0,0xffff8
+1000018e:	6269                	lui	tp,0x1a
+10000190:	656c                	.2byte	0x656c
+10000192:	4120                	lw	s0,64(a0)
+10000194:	4958                	lw	a4,20(a0)
+10000196:	5520                	lw	s0,104(a0)
+10000198:	5241                	li	tp,-16
+1000019a:	2054                	.2byte	0x2054
+1000019c:	7074754f          	.4byte	0x7074754f
+100001a0:	7475                	lui	s0,0xffffd
+100001a2:	5720                	lw	s0,104(a4)
+100001a4:	696b726f          	jal	tp,100b783a <_sp+0x9583a>
+100001a8:	676e                	.2byte	0x676e
+100001aa:	0a2e                	sll	s4,s4,0xb
+100001ac:	0000                	unimp
+100001ae:	0000                	unimp
+100001b0:	3d3d                	jal	fffffee <_start-0x12>
+100001b2:	3d3d                	jal	ffffff0 <_start-0x10>
+100001b4:	3d3d                	jal	ffffff2 <_start-0xe>
+100001b6:	3d3d                	jal	ffffff4 <_start-0xc>
+100001b8:	3d3d                	jal	ffffff6 <_start-0xa>
+100001ba:	3d3d                	jal	ffffff8 <_start-0x8>
+100001bc:	3d3d                	jal	ffffffa <_start-0x6>
+100001be:	3d3d                	jal	ffffffc <_start-0x4>
+100001c0:	3d3d                	jal	ffffffe <_start-0x2>
+100001c2:	3d3d                	jal	10000000 <_start>
+100001c4:	3d3d                	jal	10000002 <_start+0x2>
+100001c6:	3d3d                	jal	10000004 <_start+0x4>
+100001c8:	3d3d                	jal	10000006 <_start+0x6>
+100001ca:	3d3d                	jal	10000008 <_start+0x8>
+100001cc:	3d3d                	jal	1000000a <_start+0xa>
+100001ce:	3d3d                	jal	1000000c <_start+0xc>
+100001d0:	3d3d                	jal	1000000e <_start+0xe>
+100001d2:	3d3d                	jal	10000010 <_start+0x10>
+100001d4:	3d3d                	jal	10000012 <_start+0x12>
+100001d6:	3d3d                	jal	10000014 <_start+0x14>
+100001d8:	3d3d                	jal	10000016 <_start+0x16>
+100001da:	3d3d                	jal	10000018 <_start+0x18>
+100001dc:	3d3d                	jal	1000001a <_start+0x1a>
+100001de:	3d3d                	jal	1000001c <_start+0x1c>
+100001e0:	3d3d                	jal	1000001e <_start+0x1e>
+100001e2:	3d3d                	jal	10000020 <_start+0x20>
+100001e4:	3d3d                	jal	10000022 <_start+0x22>
+100001e6:	0a0a                	sll	s4,s4,0x2
+100001e8:	0000                	unimp
+	...

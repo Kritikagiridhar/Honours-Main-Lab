@@ -1,0 +1,68 @@
+; ==============================================================================
+; Verdi Signal List & Waveform Layout for AXI Interconnect + UART Top
+; ==============================================================================
+
+; --- Group 1: Clocks, Reset & Global Status ---
+addGroup "1. Clocks & Reset"
+addSignal -h 15 /tb_axi_interconnect_uart_top/clk
+addSignal -h 15 /tb_axi_interconnect_uart_top/rst
+addSignal -h 15 /tb_axi_interconnect_uart_top/uart_clk
+
+; --- Group 2: UART Physical Pins ---
+addGroup "2. UART External Interface"
+addSignal -h 15 /tb_axi_interconnect_uart_top/uart_tx
+addSignal -h 15 /tb_axi_interconnect_uart_top/uart_rx
+addSignal -h 15 /tb_axi_interconnect_uart_top/uart_irq
+
+; --- Group 3: AXI Master 0 (Core 0) Write Channel ---
+addGroup "3. AXI Master 0 (s00) - Write Channel"
+addSignal -h 15 -HEX /tb_axi_interconnect_uart_top/s00_axi_awaddr[31:0]
+addSignal -h 15 /tb_axi_interconnect_uart_top/s00_axi_awvalid
+addSignal -h 15 /tb_axi_interconnect_uart_top/s00_axi_awready
+addSignal -h 15 -HEX /tb_axi_interconnect_uart_top/s00_axi_wdata[31:0]
+addSignal -h 15 -HEX /tb_axi_interconnect_uart_top/s00_axi_wstrb[3:0]
+addSignal -h 15 /tb_axi_interconnect_uart_top/s00_axi_wvalid
+addSignal -h 15 /tb_axi_interconnect_uart_top/s00_axi_wready
+addSignal -h 15 -HEX /tb_axi_interconnect_uart_top/s00_axi_bresp[1:0]
+addSignal -h 15 /tb_axi_interconnect_uart_top/s00_axi_bvalid
+addSignal -h 15 /tb_axi_interconnect_uart_top/s00_axi_bready
+
+; --- Group 4: AXI Master 0 (Core 0) Read Channel ---
+addGroup "4. AXI Master 0 (s00) - Read Channel"
+addSignal -h 15 -HEX /tb_axi_interconnect_uart_top/s00_axi_araddr[31:0]
+addSignal -h 15 /tb_axi_interconnect_uart_top/s00_axi_arvalid
+addSignal -h 15 /tb_axi_interconnect_uart_top/s00_axi_arready
+addSignal -h 15 -HEX /tb_axi_interconnect_uart_top/s00_axi_rdata[31:0]
+addSignal -h 15 -HEX /tb_axi_interconnect_uart_top/s00_axi_rresp[1:0]
+addSignal -h 15 /tb_axi_interconnect_uart_top/s00_axi_rvalid
+addSignal -h 15 /tb_axi_interconnect_uart_top/s00_axi_rready
+
+; --- Group 5: Interconnect Output to UART (Port M00) ---
+addGroup "5. Interconnect Port M00 -> UART"
+addSignal -h 15 -HEX /tb_axi_interconnect_uart_top/dut/m00_axi_awaddr[31:0]
+addSignal -h 15 /tb_axi_interconnect_uart_top/dut/m00_axi_awvalid
+addSignal -h 15 /tb_axi_interconnect_uart_top/dut/m00_axi_awready
+addSignal -h 15 -HEX /tb_axi_interconnect_uart_top/dut/m00_axi_wdata[31:0]
+addSignal -h 15 /tb_axi_interconnect_uart_top/dut/m00_axi_wvalid
+addSignal -h 15 /tb_axi_interconnect_uart_top/dut/m00_axi_wready
+addSignal -h 15 -HEX /tb_axi_interconnect_uart_top/dut/m00_axi_bresp[1:0]
+addSignal -h 15 /tb_axi_interconnect_uart_top/dut/m00_axi_bvalid
+addSignal -h 15 /tb_axi_interconnect_uart_top/dut/m00_axi_bready
+addSignal -h 15 -HEX /tb_axi_interconnect_uart_top/dut/m00_axi_araddr[31:0]
+addSignal -h 15 /tb_axi_interconnect_uart_top/dut/m00_axi_arvalid
+addSignal -h 15 /tb_axi_interconnect_uart_top/dut/m00_axi_arready
+addSignal -h 15 -HEX /tb_axi_interconnect_uart_top/dut/m00_axi_rdata[31:0]
+addSignal -h 15 -HEX /tb_axi_interconnect_uart_top/dut/m00_axi_rresp[1:0]
+addSignal -h 15 /tb_axi_interconnect_uart_top/dut/m00_axi_rvalid
+addSignal -h 15 /tb_axi_interconnect_uart_top/dut/m00_axi_rready
+
+; --- Group 6: UART Internal Registers & Queues ---
+addGroup "6. UART Internal Registers"
+addSignal -h 15 -HEX /tb_axi_interconnect_uart_top/dut/u_axi_uart/uart_baudrate_div_int[15:0]
+addSignal -h 15 -HEX /tb_axi_interconnect_uart_top/dut/u_axi_uart/uart_config_reg_int[31:0]
+addSignal -h 15 -HEX /tb_axi_interconnect_uart_top/dut/u_axi_uart/uart_lsr_reg_int[31:0]
+addSignal -h 15 /tb_axi_interconnect_uart_top/dut/u_axi_uart/uart_irq_en_int
+addSignal -h 15 -HEX /tb_axi_interconnect_uart_top/dut/u_axi_uart/data_tx_fifo_controller[7:0]
+addSignal -h 15 -HEX /tb_axi_interconnect_uart_top/dut/u_axi_uart/data_rx_controller_fifo[7:0]
+addSignal -h 15 /tb_axi_interconnect_uart_top/dut/u_axi_uart/tx_fifo_full_int
+addSignal -h 15 -HEX /tb_axi_interconnect_uart_top/dut/u_axi_uart/rx_fifo_space_int[3:0]
