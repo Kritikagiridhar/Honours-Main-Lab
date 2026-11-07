@@ -1,0 +1,4 @@
+clk,input,1
+rst_n,input,1
+ssd_seg,output,8
+ssd_digit_sel,output,4

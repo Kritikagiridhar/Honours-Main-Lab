@@ -1,0 +1,7 @@
+clk,input,1
+rst_n,input,1
+addr,input,32
+wdata,input,32
+write,input,1
+rdata,output,32
+ready,output,1

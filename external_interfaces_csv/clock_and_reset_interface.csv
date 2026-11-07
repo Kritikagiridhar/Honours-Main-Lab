@@ -1,0 +1,3 @@
+Signal Name,Direction,Width,Bit Range,Description
+clk,Input,1,[0:0],Primary System Clock (100 MHz)
+rst_n,Input,1,[0:0],Asynchronous Active-Low Master System Reset

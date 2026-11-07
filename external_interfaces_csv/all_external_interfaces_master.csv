@@ -1,0 +1,37 @@
+Interface Name,Associated Instance/IP,Signal Name,Direction,Width,Bit Range,Description
+UART Interface,u_axi_uart (axi_interconnect_uart_top),uart_rx,Input,1,[0:0],UART Serial Receive Line (Stimulus from External Terminal/VIP)
+UART Interface,u_axi_uart (axi_interconnect_uart_top),uart_tx,Output,1,[0:0],UART Serial Transmit Line (Monitored by External Terminal/VIP)
+UART Interface,u_axi_uart (axi_interconnect_uart_top),uart_irq,Output,1,[0:0],UART Interrupt Request Line (External Telemetry / PIC Monitor)
+GPIO Interface,u_gpio (gpio),gpio_in,Input,8,[7:0],General Purpose Parallel Input Pins (External Switches/Sensors Stimulus)
+GPIO Interface,u_gpio (gpio),gpio_out,Output,8,[7:0],General Purpose Parallel Output Pins (External LEDs/Actuators Monitor)
+PWM Interface,u_pwm (pwm),pwm_out,Output,4,[3:0],4-Channel Pulse Width Modulated Outputs (Channels 0..3)
+Seven-Segment Display Interface,u_ssd (seven_segment),ssd_seg,Output,8,[7:0],7-Segment Cathodes + Decimal Point [a b c d e f g dp] (Active-Low)
+Seven-Segment Display Interface,u_ssd (seven_segment),ssd_digit_sel,Output,4,[3:0],4-Digit Common Anode Select Lines (Active-Low One-Hot)
+Watchdog Interface,u_wdt (watchdog),wdt_reset_out,Output,1,[0:0],Watchdog Hardware Reset Out Indicator (Fires on System Watchdog Trip)
+Clock & Reset Interface,Top-level SoC / System,clk,Input,1,[0:0],Primary System Clock (100 MHz)
+Clock & Reset Interface,Top-level SoC / System,rst_n,Input,1,[0:0],Asynchronous Active-Low Master System Reset
+Core Control Interface,u_veer_core (veer_wrapper),rst_vec,Input,31,[31:1],CPU Reset Vector Address Base
+Core Control Interface,u_veer_core (veer_wrapper),nmi_int,Input,1,[0:0],External Non-Maskable Interrupt Request (Active-High)
+Core Control Interface,u_veer_core (veer_wrapper),nmi_vec,Input,31,[31:1],CPU Non-Maskable Interrupt Vector Base Address
+Core Control Interface,u_veer_core (veer_wrapper),jtag_id,Input,31,[31:1],Core JTAG Identification Code
+External Interrupt Interface,u_veer_core (PIC),ext_irq,Input,24,[23:0],External Interrupt Expansion Sources for Core PIC (Indices 8..31)
+External Interrupt Interface,u_veer_core (PIC),timer_int,Input,1,[0:0],External Timer Interrupt Input to RISC-V Core
+CPU Trace & Debug Interface,u_veer_core (veer_wrapper),trace_rv_i_insn_ip,Output,32,[31:0],Retired Instruction Machine Code (32-bit RISC-V Instruction)
+CPU Trace & Debug Interface,u_veer_core (veer_wrapper),trace_rv_i_address_ip,Output,32,[31:0],Program Counter (PC) Address of Retired Instruction
+CPU Trace & Debug Interface,u_veer_core (veer_wrapper),trace_rv_i_valid_ip,Output,1,[0:0],Instruction Trace Valid Strobe (Asserted when Instruction Retires)
+CPU Trace & Debug Interface,u_veer_core (veer_wrapper),trace_rv_i_exception_ip,Output,1,[0:0],Exception Flag for Current Instruction Retirement
+CPU Trace & Debug Interface,u_veer_core (veer_wrapper),trace_rv_i_ecause_ip,Output,5,[4:0],Exception / Trap Cause Code
+CPU Trace & Debug Interface,u_veer_core (veer_wrapper),trace_rv_i_interrupt_ip,Output,1,[0:0],Interrupt Trap Indicator
+CPU Trace & Debug Interface,u_veer_core (veer_wrapper),trace_rv_i_tval_ip,Output,32,[31:0],Trap Value Register (MTVAL Content)
+CPU Trace & Debug Interface,u_veer_core (veer_wrapper),o_cpu_halt_status,Output,1,[0:0],CPU Halted Execution Status
+CPU Trace & Debug Interface,u_veer_core (veer_wrapper),o_cpu_halt_ack,Output,1,[0:0],CPU Halt Request Acknowledged
+CPU Trace & Debug Interface,u_veer_core (veer_wrapper),o_debug_mode_status,Output,1,[0:0],CPU Debug Mode Status Indicator
+SPI ADC Interface (Standalone IP),spi_controller (Standalone IP),adc_spi_sck,Output,1,[0:0],SPI Serial Clock to External ADC Slave
+SPI ADC Interface (Standalone IP),spi_controller (Standalone IP),adc_spi_mosi,Output,1,[0:0],SPI Master Out Slave In Data Line
+SPI ADC Interface (Standalone IP),spi_controller (Standalone IP),adc_spi_miso,Input,1,[0:0],SPI Master In Slave Out Data Line from External ADC
+SPI ADC Interface (Standalone IP),spi_controller (Standalone IP),adc_spi_cs_n,Output,1,[0:0],SPI Active-Low Chip Select to External ADC Slave
+VGA Display Interface (Standalone IP),vga_controller (Standalone IP),vga_hsync,Output,1,[0:0],Horizontal Synchronization Pulse (640x480 @ 60Hz Standard)
+VGA Display Interface (Standalone IP),vga_controller (Standalone IP),vga_vsync,Output,1,[0:0],Vertical Synchronization Pulse (640x480 @ 60Hz Standard)
+VGA Display Interface (Standalone IP),vga_controller (Standalone IP),vga_red,Output,4,[3:0],4-bit Red Analog Color Channel (via R-2R DAC)
+VGA Display Interface (Standalone IP),vga_controller (Standalone IP),vga_green,Output,4,[3:0],4-bit Green Analog Color Channel (via R-2R DAC)
+VGA Display Interface (Standalone IP),vga_controller (Standalone IP),vga_blue,Output,4,[3:0],4-bit Blue Analog Color Channel (via R-2R DAC)

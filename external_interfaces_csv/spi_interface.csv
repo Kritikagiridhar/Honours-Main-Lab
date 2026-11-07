@@ -1,0 +1,6 @@
+clk,input,1
+rst_n,input,1
+adc_spi_sck,output,1
+adc_spi_mosi,output,1
+adc_spi_miso,input,1
+adc_spi_cs_n,output,1

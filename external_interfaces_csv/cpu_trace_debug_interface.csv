@@ -1,0 +1,12 @@
+clk,input,1
+rst_n,input,1
+trace_rv_i_insn_ip,output,32
+trace_rv_i_address_ip,output,32
+trace_rv_i_valid_ip,output,1
+trace_rv_i_exception_ip,output,1
+trace_rv_i_ecause_ip,output,5
+trace_rv_i_interrupt_ip,output,1
+trace_rv_i_tval_ip,output,32
+o_cpu_halt_status,output,1
+o_cpu_halt_ack,output,1
+o_debug_mode_status,output,1

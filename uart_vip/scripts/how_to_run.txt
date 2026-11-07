@@ -1,0 +1,33 @@
+HOW TO RUN UART VIP & VIEW WAVEFORMS IN VERDI
+
+1. Make scripts executable:
+   chmod +x scripts/*.sh
+
+2. Run compile and simulation with VCS:
+   cd scripts
+   ./run_vcs.sh
+
+   This will:
+   - Compile design & UVM VIP using VCS with -kdb and -debug_access+all
+   - Run uart_loopback_test
+   - Generate dump.fsdb (for Verdi) and dump.vcd (for GTKWave/DVE)
+
+3. View Waveforms in Synopsys Verdi:
+   cd scripts
+   ./open_verdi.sh
+
+   This will open Verdi, load the design database (simv.daidir),
+   open dump.fsdb, and automatically restore all key interface,
+   driver, DUT, and monitor signals from verdi_signals.rc.
+
+4. Signals Displayed in Verdi:
+   - clk, rst_n               : Clock and Reset
+   - u_if.uart_rx             : Serial line into DUT (driven by UVM Driver)
+   - u_if.dbg_drv_data[7:0]   : Byte transmitted by UVM Driver (e.g. 0xA5, 0x5A, 0x33, 0xCC, 0xF0)
+   - u_if.dbg_drv_busy        : Driver transmission active
+   - u_dut.rx_byte[7:0]       : Byte deserialized inside DUT
+   - u_dut.irq / u_if.uart_irq: Interrupt pulse asserted by DUT upon byte reception
+   - u_dut.tx_byte[7:0]       : Byte sent back by DUT
+   - u_if.uart_tx             : Serial line out of DUT (sampled by UVM Monitor)
+   - u_if.dbg_mon_data[7:0]   : Byte reconstructed by UVM Monitor
+   - u_if.dbg_mon_valid       : Monitor strobe signaling valid byte captured & verified

@@ -1,0 +1,4 @@
+clk,input,1
+rst_n,input,1
+gpio_in,input,8
+gpio_out,output,8

@@ -1,0 +1,7 @@
+clk,input,1
+rst_n,input,1
+vga_hsync,output,1
+vga_vsync,output,1
+vga_red,output,4
+vga_green,output,4
+vga_blue,output,4

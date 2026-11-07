@@ -1,0 +1,3 @@
+clk,input,1
+rst_n,input,1
+wdt_reset_out,output,1

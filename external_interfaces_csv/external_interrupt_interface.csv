@@ -1,0 +1,4 @@
+clk,input,1
+rst_n,input,1
+ext_irq,input,24
+timer_int,input,1
